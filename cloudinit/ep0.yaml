@@ -1,0 +1,66 @@
+#cloud-config
+
+timezone: US/Pacific
+
+packages:
+ - salt-minion
+
+ssh_keys:
+  dsa_private: |
+    -----BEGIN DSA PRIVATE KEY-----
+    MIIBuwIBAAKBgQCWpZdjfr/blch4uWbBqLK6NvDdyutBIxHz6Lji/XcDlPNnh+XJ
+    8NXDprdrMH15yJVCqb6/dAmOz1CPwiSLhjP1VKAePjr4tjdhPviR1BPLTx/5HH90
+    LgyAadJbd5JDdrZseo6+RL9sfSOqYAdj4MFNAMcOMVlve480GgDZwgbGGwIVAOLq
+    /+SKwD9sK1orRpGu0rnc3SydAoGAJjoCOUjVlFqNEFVihWKuW2O66JqObWSfbpFN
+    YcKCLhXDS49Wwy/e1eVUJ/WzqAizEq5uGStFvjLmxzKcabDx04xITQQC9nvyQW9m
+    mklVxTfvcF/NCFKQbBrLmXx3JdsN5JK2ZuzkkXiK09cIrJE2Z6jX+pINWgLeDboC
+    FTw7e5MCgYBuIyymNUuKw5zdx//lS5YRvOOZccYnHX5I0Q8GZoTjgIG106Muf0Ba
+    JBmNdz1a09M2LZQRY8CmjJ8p1w7jNcQx1B4+boDW3KQicpvBJ0nqTbEBjIFFAJ99
+    S6msHOETl078vIy9tjNVbLzkAnWfI7zZFGIaMB0uXdnya2D8rNGkagIVANAb7PzQ
+    7WeUMNCABwN0DVcX7aJV
+    -----END DSA PRIVATE KEY-----
+
+  dsa_public:
+     ssh-dss AAAAB3NzaC1kc3MAAACBAJall2N+v9uVyHi5ZsGosro28N3K60EjEfPouOL9dwOU82eH5cnw1cOmt2swfXnIlUKpvr90CY7PUI/CJIuGM/VUoB4+Ovi2N2E++JHUE8tPH/kcf3QuDIBp0lt3kkN2tmx6jr5Ev2x9I6pgB2PgwU0Axw4xWW97jzQaANnCBsYbAAAAFQDi6v/kisA/bCtaK0aRrtK53N0snQAAAIAmOgI5SNWUWo0QVWKFYq5bY7romo5tZJ9ukU1hwoIuFcNLj1bDL97V5VQn9bOoCLMSrm4ZK0W+MubHMpxpsPHTjEhNBAL2e/JBb2aaSVXFN+9wX80IUpBsGsuZfHcl2w3kkrZm7OSReIrT1wiskTZnqNf6kg1aAt4NugIVPDt7kwAAAIBuIyymNUuKw5zdx//lS5YRvOOZccYnHX5I0Q8GZoTjgIG106Muf0BaJBmNdz1a09M2LZQRY8CmjJ8p1w7jNcQx1B4+boDW3KQicpvBJ0nqTbEBjIFFAJ99S6msHOETl078vIy9tjNVbLzkAnWfI7zZFGIaMB0uXdnya2D8rNGkag== root@ep0
+
+
+  rsa_private: |
+    -----BEGIN RSA PRIVATE KEY-----
+    MIIEowIBAAKCAQEApB/MwPP25yaCwgbFOqhepOfsY0a5hf89ZRb/1JhJ8bLCycdt
+    D3O1FZjZRACRiobymDkJ7TDmTAdIQjMHzJrZXEfT7+c5iFfYg+xrD/Jj+UQua7WK
+    uNkV43GiALlxNB5yhOpwWqY7srpRyn+uUW0s4mAHnayOobkS5K+bUAwSNAz6oK60
+    rEJ/mfWsvnSn+KzCtgLi6IOdWmo7fQd727pYMxl8x20yMr9bajEuAA5Abb0aeCOq
+    RalPugaarx6fsLTUA9r6g63wRU+KdXLSrorQue2uL/Lp2T9dn5JLfOxYTVBS4BXe
+    U0U1QiFhqFwJPPuH2w9BjMbZPodz9jwU1LVbiQIDAQABAoIBAEzBuoa7EkvEjP6l
+    H/Rw7eJ9vOYpG3b5igMPIJKSrnJlQggQRoclfBkfpOzSvz5kImzisCvH5MzF0xty
+    tkEQYntv9ESMhTGos8/u75tDp1Hae0NQYhJVJJF8gWGJWNIhMznKUsVyXRUXYk0s
+    LaBTSNyOQMGTBBnKbnWZUy+6lYDVmTgELE8mk4Az+R28pHpVEKV82IODy32h62QR
+    QQ4E/g/Y3uu+seGeOSKdehTfe7I2ie/n+iTssykyjm9uRTLEAfXidd/B1fDinE+K
+    uCkD3ez1pPwxfpGZSY/U5RimZTvXipRLsEXg6hDJvzIaEj/BLRjg12zx1FMPzEmx
+    D6UdQukCgYEA1UafC3RZturcICFLvhc9lxthZp4TbgHkx4aFunOFPCsIcQ7MEZ4b
+    T2E5gavhO13tgjPrTMJ1BEDEq+fJDgc+4tKgiaQbO1RxPo49LbKm62vCrxcJYho2
+    SZAa1fFZjV1krNdc+kykc4XbGjbc79Be5dblKk51LzU7ZjZMaJi9p3MCgYEAxQCL
+    rJkwtYRj5BlYRQwAcXVmc3NyHUJkeCOjPTY+Q1SqrDtY3aAdt82CngbR5AW4I908
+    eWbh+SML+sGMbA0LU5WFHPJrHn339jCeRMibQXVcYElrM+VkBqMdriDAOwYhnje1
+    3MeXUa6+yYH07npUy6CWiQ33DBGl/1Z8FONO2hMCgYA8Hcjs6KH1LmRX5iq8bT6e
+    HkipLTua0YvUNfXx5WgT2qlpfNtGyAM4r9YO2A0Ht+Ufw1S68UEcrskBD7ebba1r
+    MCWyRoCqi5XUJTHXdLkaOOjKg7rQXUUaHTWDQqGUeFPNaHM71miwa3WkAPzr2Bc3
+    wAgekbj0UpPorruA7DThQwKBgQC3Zm6h3GuwUPP94mp+vVGcTsN2L7/I5YpLHkJW
+    Ni142VWayhVNHkcMWlKDc63rLjfji49FJjaxjaMVayKjZPFqewRVkomO9Y7mrxRo
+    zKldIzlAmpkm0yNv2mNDPFI5oNejSBIS2+1PqfML/eRcL57Jg1MhfNLFdZioQYd6
+    mrNJ6QKBgB3eelltel3l5FrCNasuu/d9A3E9rHpPP97LFtuPWgvtwINdAAbu7vq0
+    vpzqeZf+J3+oPzok23vQAFBNCXy+TYwBeV4Gbarvc6xkSN5HGu6GT+kmjrBR1wv9
+    T2DGEqgPbt2Tske7pIMZNNEcMN7cNbZ4yAxAARjpM8VXd2h/Hwni
+    -----END RSA PRIVATE KEY-----
+
+  rsa_public:
+     ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCkH8zA8/bnJoLCBsU6qF6k5+xjRrmF/z1lFv/UmEnxssLJx20Pc7UVmNlEAJGKhvKYOQntMOZMB0hCMwfMmtlcR9Pv5zmIV9iD7GsP8mP5RC5rtYq42RXjcaIAuXE0HnKE6nBapjuyulHKf65RbSziYAedrI6huRLkr5tQDBI0DPqgrrSsQn+Z9ay+dKf4rMK2AuLog51aajt9B3vbulgzGXzHbTIyv1tqMS4ADkBtvRp4I6pFqU+6BpqvHp+wtNQD2vqDrfBFT4p1ctKuitC57a4v8unZP12fkkt87FhNUFLgFd5TRTVCIWGoXAk8+4fbD0GMxtk+h3P2PBTUtVuJ root@ep0
+
+
+runcmd:
+ - [ /sbin/sysctl, net.ipv4.conf.all.forwarding=1 ]
+ - [ /sbin/iptables, -t, nat, -A, POSTROUTING, -o, eth0, -j, MASQUERADE ]
+ - [ mkdir, -p, /etc/salt ]
+ - [ /usr/bin/python, -c, "import boto;boto.connect_s3().get_bucket('pvt-bucket').get_key('minion').get_contents_to_filename('/etc/salt/minion')" ]
+ - [ /sbin/service, salt-minion, restart ]
+ - [ /sbin/chkconfig, salt-minion, on ]

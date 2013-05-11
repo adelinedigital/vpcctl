@@ -1,0 +1,69 @@
+#cloud-config
+
+timezone: US/Pacific
+
+packages:
+ - salt-minion
+ - httpd
+
+ssh_keys:
+  dsa_private: |
+    -----BEGIN DSA PRIVATE KEY-----
+    MIIBvAIBAAKBgQDiaKqJr5/25IHt4QelhjjJjVHkjXO/JpxaBX6pYTkCLTtyIOk3
+    nmL5h9x2LyY0pj/u+xPfGgwBwTSLzQsdVddqkCquvunX8BYSH+lGwSOMAWzoURko
+    G4eryY7mM0UXgWj9E5TtRTsi3G63hyMZ161DOGRdMo2plsslkjnqRDUE2wIVAM7w
+    zWE5/XlsLKz+6QSjXlSnL13RAoGADZe5oNOk8S8H0aDEKdbK6N0PGW/DAjASrJ/Q
+    mJRJ/vuYmDwI8Q+V4WlVfnThwQC0oD11x7UxFzdTkdhTYDn1uf4Et7I/d6i8lgZN
+    15LNduwMQuBULHWpM73NsoBnwHHOswGOT+2jYrDlLNXcLfkDWY6iCb8MTxGb3J6v
+    kY5SowcCgYEAkpzlKFGlcy/JxTIORjb72Yl98DyLDBNyaMf0ZLHh3MRVzLblYMdC
+    b3HX/QINQOOsNLQqi5t3daetoPt40mCeP9ga6yvc44m6cK4CUjCXfOT0ftUkRw6Z
+    gQj1Q+P2vVz4NM0dg+GpLa3GmTBtaPZghn51qrV3DqVzEYOWDeqV1IQCFQCECCcM
+    vXOvghq98tOao1OJtTQv0w==
+    -----END DSA PRIVATE KEY-----
+
+  dsa_public:
+     ssh-dss AAAAB3NzaC1kc3MAAACBAOJoqomvn/bkge3hB6WGOMmNUeSNc78mnFoFfqlhOQItO3Ig6TeeYvmH3HYvJjSmP+77E98aDAHBNIvNCx1V12qQKq6+6dfwFhIf6UbBI4wBbOhRGSgbh6vJjuYzRReBaP0TlO1FOyLcbreHIxnXrUM4ZF0yjamWyyWSOepENQTbAAAAFQDO8M1hOf15bCys/ukEo15Upy9d0QAAAIANl7mg06TxLwfRoMQp1sro3Q8Zb8MCMBKsn9CYlEn++5iYPAjxD5XhaVV+dOHBALSgPXXHtTEXN1OR2FNgOfW5/gS3sj93qLyWBk3Xks127AxC4FQsdakzvc2ygGfAcc6zAY5P7aNisOUs1dwt+QNZjqIJvwxPEZvcnq+RjlKjBwAAAIEAkpzlKFGlcy/JxTIORjb72Yl98DyLDBNyaMf0ZLHh3MRVzLblYMdCb3HX/QINQOOsNLQqi5t3daetoPt40mCeP9ga6yvc44m6cK4CUjCXfOT0ftUkRw6ZgQj1Q+P2vVz4NM0dg+GpLa3GmTBtaPZghn51qrV3DqVzEYOWDeqV1IQ= root@web
+
+
+  rsa_private: |
+    -----BEGIN RSA PRIVATE KEY-----
+    MIIEpAIBAAKCAQEApk30IEtJmmZtDgErJUphkYhWjWMOQCZIxHvmkCaURizVfww8
+    RHKf0m1djW5d1+m01Akx0/Ei3Fr5atwBwuKx5hyjFDKareP7VD7r2RsG2ITbP13f
+    e9KIWIDX5mrBBsz0KFLYxpstY5yZlfw6WrzfKEB6VDGx3pT/tGL3R72F2bf2Q7Hj
+    Qhu0E+W9VGLO0fcNPiiI2ihPOgl3KpN66zFNjkoQ7nCmL373dhy0p5wYIK062iDH
+    wBDVzKjJ/xj7uUEX8rfORQuDZ9VnnJerCQ32G3qeTLYdRbX8643lKaa2k/2yMZ22
+    /nkwYEgp7l/dP9zOWxvsNdWLDqrHFBLp4HdmuQIDAQABAoIBAQCRrTdsEocm+RIO
+    cneY8s8E7KjksSCKkP6tHtuY6jJ4Rk2+PLmOO9pEOgj5GvSZbd843dUIEvK2k/pn
+    4NCqJmovaGZyCuHz8QD3iyaNx173y2lC2LgrfwBwhmyZKmpryp0VtXyufMAFwefH
+    umpjkY7pc5G0rtNgZqSXHxn9fccCLvkLXMr2yjGYqV+tIFsEvX30JcvDFrWlFL3n
+    LTcw5qhNBXeRlmw33sWYvm3fKm58CxJ9Lh7MpLkLQ/LuAIiQ8AwvkDhZaeWk5iB4
+    Lhs4WGZ7WYBwzxBhEMyiLb4TM6UUBw6VBEjJi+TZVBSwg76Eb/SVCZWV+JYQyQ4T
+    wmOya7kBAoGBANwc5pfGTQxBV1NglNlJJwuvB3067I4nm0uidf9ZzLA7wj9lmJN9
+    XHsODn29VLmL3EmIGD0JvtnuYtJtS+AIYtwRI4onIyTPUGjyK6QmSPQueY9tvVr8
+    FjPMySLJ6cHtSIGznQk15dsYIaNYub+WHm1gv4Q5/mzpHyp6qVN14hP7AoGBAMFr
+    MRTivaMZyPRE21YeQCeUrXXkbk04V3fAJVaeGkycPnOJWjkpGIIm96OE2tuyz7x8
+    ROvFJSa/v9bPybm45GH7tXq6JuAZd0WYF3aW6NR1tXJtmbeDaVtNBxzXGOM1NXaT
+    Ca24yVn3s05XUtshHgR8y4U9IfsATh0vK/rs8L3bAoGABzpLuCAi14wtuecp/BiS
+    16dfr5UHv4M9bjZfeYsRVZggwMQtRmqPZtsHTsmwxob5LNDzOs3fHnjdddtw6mJc
+    HK3TZO30EXldQpTxKeq36oy8ISGRXjN45yqKUEIhEuUfxGKJfYvviEo6kIqRTuE3
+    DpBmuYjN+fWNuG9esAbm7ZECgYBSnAy3hexG+CFbKvmfO4ZdIWRAwRLXSmQZUmjg
+    KODErcsCn7x4Q3QjSq9kGL89LI8LSuxI4sfuV+GAxvi6qRxqOQ6W32DxQA8wGziS
+    PvwsmiWoPOV1etwJ0cli6P/JMxWlkkGFADKHiYL8x9EspGVkt0RZoPWdddDnKBmZ
+    r49XFwKBgQCGnrQQMEBHkbOtasjLbZRadW3MI3Fu5cg1CO2lL3A+2eyRL2y6aY7F
+    YMVOCQ1qeWs82uBMXUQtRxKop5vXEsup1gBUOHIY21hs4foQjXsOVxuKfBco6enh
+    qxvAD2n9fTof5cfZqq7edwXZk7i4KJu0uXfrCnEZ1m0WOuses7yoNw==
+    -----END RSA PRIVATE KEY-----
+
+  rsa_public:
+     ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCmTfQgS0maZm0OASslSmGRiFaNYw5AJkjEe+aQJpRGLNV/DDxEcp/SbV2Nbl3X6bTUCTHT8SLcWvlq3AHC4rHmHKMUMpqt4/tUPuvZGwbYhNs/Xd970ohYgNfmasEGzPQoUtjGmy1jnJmV/DpavN8oQHpUMbHelP+0YvdHvYXZt/ZDseNCG7QT5b1UYs7R9w0+KIjaKE86CXcqk3rrMU2OShDucKYvfvd2HLSnnBggrTraIMfAENXMqMn/GPu5QRfyt85FC4Nn1Wecl6sJDfYbep5Mth1FtfzrjeUppraT/bIxnbb+eTBgSCnuX90/3M5bG+w11YsOqscUEungd2a5 root@web
+
+
+runcmd:
+ - [ mkdir, -p, /etc/salt ]
+ - [ /usr/bin/python, -c, "import boto;boto.connect_s3().get_bucket('pvt-bucket').get_key('minion').get_contents_to_filename('/etc/salt/minion')" ]
+ - [ /sbin/service, salt-minion, restart ]
+ - [ /sbin/service, httpd, restart ]
+ - [ /sbin/chkconfig, salt-minion, on ]
+ - [ /sbin/chkconfig, httpd, on ]
+ - [ /bin/cp, /proc/sys/kernel/hostname, /var/www/html/index.html ]
+ - [ /bin/chmod, 644, /var/www/html/index.html ]

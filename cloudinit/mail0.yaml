@@ -1,0 +1,64 @@
+#cloud-config
+
+timezone: US/Pacific
+
+packages:
+ - salt-minion
+
+ssh_keys:
+  dsa_private: |
+    -----BEGIN DSA PRIVATE KEY-----
+    MIIBuwIBAAKBgQD+elbfOg3h9wmWCHAvySaK8nLTUNc4+mq1lSBL8Nge2A2oCkwk
+    yoHBwnn5Ze7sfSWmyCnfAXYScgKzaLk0mET19FzmD5RGFG+AdSQBxCK5k6jONN0J
+    TeW5iErDYFfBE9yo3UqE3T5/HYm+H8yBLSZHr5DWX0/qiqci/uiq6LPu2wIVAKFA
+    /5/dmF4oEZRq4405PFXgOmXxAoGBAMXsOWn4v5UwBuwLgt4QbQ0P01tKDArB8vE3
+    tH32S9e3jlo0LIx5cGGFDLcIbRTf2p9xOzFp09d5f8xUeOZlbshLTIANF+A7HGzY
+    PYO9GMbRl9Kv23MF/FKScL2jdO5D3FMKKEtBT3DtZEim7cD63MP/MsOm+sijq9Yw
+    DxQkuAPbAoGARiMyyBcrDPQd+DVVX87jDM1Xlj/w2z/GQFhNDV2WQYhBVRxLhhKr
+    el3KD/5cqPOsPIvqrh6Fs4GB3I2lTY3t029vqGQRjgCA08vfXIS7l9yPIRhNfsd7
+    /LBmRSqvbQ+wdz+5zKrK/V4e3T8xvswKMznhqZXKI1+rYFxSbWvAw4QCFAwYgwnv
+    WzTECZbCmtjcT7SMO3dz
+    -----END DSA PRIVATE KEY-----
+
+  dsa_public:
+     ssh-dss AAAAB3NzaC1kc3MAAACBAP56Vt86DeH3CZYIcC/JJoryctNQ1zj6arWVIEvw2B7YDagKTCTKgcHCefll7ux9JabIKd8BdhJyArNouTSYRPX0XOYPlEYUb4B1JAHEIrmTqM403QlN5bmISsNgV8ET3KjdSoTdPn8dib4fzIEtJkevkNZfT+qKpyL+6Kros+7bAAAAFQChQP+f3ZheKBGUauONOTxV4Dpl8QAAAIEAxew5afi/lTAG7AuC3hBtDQ/TW0oMCsHy8Te0ffZL17eOWjQsjHlwYYUMtwhtFN/an3E7MWnT13l/zFR45mVuyEtMgA0X4DscbNg9g70YxtGX0q/bcwX8UpJwvaN07kPcUwooS0FPcO1kSKbtwPrcw/8yw6b6yKOr1jAPFCS4A9sAAACARiMyyBcrDPQd+DVVX87jDM1Xlj/w2z/GQFhNDV2WQYhBVRxLhhKrel3KD/5cqPOsPIvqrh6Fs4GB3I2lTY3t029vqGQRjgCA08vfXIS7l9yPIRhNfsd7/LBmRSqvbQ+wdz+5zKrK/V4e3T8xvswKMznhqZXKI1+rYFxSbWvAw4Q= root@mail0
+
+
+  rsa_private: |
+    -----BEGIN RSA PRIVATE KEY-----
+    MIIEpAIBAAKCAQEAvZP3Vqd0ZZONiD4oXBi6Wyh9ETXcpqzaIpaUz3cYgD9Qd6R3
+    csmacPYBMUSgnuidTQDS4McAOsMAC11BYQoMZV/qNZ93EUXRYyTDahYZYf2zA7ri
+    duBWrfxK6st5RuiLwE4i3+8dR1nMfDI1Hoonb2Io0CxV/DIszTnSp0sFt9JIlxw/
+    IGCMhB1b4PQJzCrwTGKzHNvkBDLhtvZ5g63PnqdI9sX+myHZ0uE0bD9hBpiZNByw
+    8VaDbDOCzVhlQMaWzcsnEIDUhdI1gSzfGAVwp0USMeBj4KbaOUgUuyQQ9+AIwxSU
+    4pWfKTF3/HR5vDcfkp72wTn8Jl/cy7C+ExeeKQIDAQABAoIBABUVtOetXjPB8nbZ
+    uvFrSqbC3Q4h+HWNOgGoz8o3S8FPyWpVH3fj1kqEAePx5w9lfcFHuyyG1Y6zi3i4
+    GYJqdLB9t3XZU4vXQQ+O0jElXhNY/SUIDxH7p4hYTBjLIqTxTkHILvbLCG2cHjMd
+    /mx0HyizOSjWFYYkKnl02eoDXRJxnpyADFzQ1iHOQC7RHBCjNsoZjWcsoM63AQD8
+    MbXFMVIXKDPmbA6V6ZiXBLamZnLEiAqxt35MtGmxWnCS7xDacXir1H7jAMpN6cmg
+    w1tCaA+2+DdLQRheaCpUsOnXetfUI7s4x4kqYSyvWO1yvq/K1lLNeGDHh4i2kbkI
+    PYp7ctECgYEA9MZszNB0EJfIikJouJHKo8DR1VctHyhomwzPsEmP4D0H71bH19yA
+    LlyLjj1WQpfc+Wf2e8sIEZMEyLbjEX8qVgfx6RN/+rhFGTzXBiGYK/fNnKQEAMA+
+    hdLcy04zZwYL4NuqLwIBI/ySC0Yz/qWz5sKMLz5XpvVw6FUqmRWCRfUCgYEAxkWL
+    1pavudHWGeWVpas2I2gvxeY0OyKr+eO+YXrHZIlT+CA792+TBIwxkZ0eHReP8JqZ
+    9hIsxfw97gjsZsOzJAodMjuJfASYzXh4p0PXvsNhH9lAA1QfrgoFCjAzi8y0vNdY
+    4YGvVktn6Ut1i2aJMEF81vS3Q05KkkcKiDfiouUCgYEA70jm5ZZGUE5BQj/HZd9I
+    LKr7tkZBmvsCv8hXZCuVlg2zqxq3xGMPf8MCvmth3zncUIh8YepKGfwSKjD3a4xY
+    E8Aykbp5Wt0214QtZBYFT74w55dDPoSw2lwXcjwhbe5wQEIdbVTVTpvDHXhkreTJ
+    KKY5KpoUT+gSl11ihkKLlt0CgYEAlMlDsvjJTcxlunFK51OgANoCX6PstiPConeB
+    Om2Ei7FyTdUCqyATV2pNGFSrcHFqFsgtmTbyWnB7mNEhdcyN9hGQ7002UtawRCCP
+    ihWjJQhBLkE9hEHwtA3Y0lhxlgs75ipEDJXhGgTkKXHy93UupgO+xyBFFkD+PN8K
+    zEYD0PECgYBWMzo7J/GnyvWdBGNyEhTIc9kOBwzg37BXKjBsmRxsQu1pN55jTb9O
+    mBjUfFqTeCV/7jfb9maY5NMA14gtCIOztGtjGJF6BLxyDZhLZ/ev5f5mg6dgifgc
+    aaSZzH2Sm5+gaLeMhuLq96IOy/bJ0tx9QAGEzIVtdAYYkktCpNeeNw==
+    -----END RSA PRIVATE KEY-----
+
+  rsa_public:
+     ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9k/dWp3Rlk42IPihcGLpbKH0RNdymrNoilpTPdxiAP1B3pHdyyZpw9gExRKCe6J1NANLgxwA6wwALXUFhCgxlX+o1n3cRRdFjJMNqFhlh/bMDuuJ24Fat/Erqy3lG6IvATiLf7x1HWcx8MjUeiidvYijQLFX8MizNOdKnSwW30kiXHD8gYIyEHVvg9AnMKvBMYrMc2+QEMuG29nmDrc+ep0j2xf6bIdnS4TRsP2EGmJk0HLDxVoNsM4LNWGVAxpbNyycQgNSF0jWBLN8YBXCnRRIx4GPgpto5SBS7JBD34AjDFJTilZ8pMXf8dHm8Nx+SnvbBOfwmX9zLsL4TF54p root@mail0
+
+
+runcmd:
+ - [ mkdir, -p, /etc/salt ]
+ - [ /usr/bin/python, -c, "import boto;boto.connect_s3().get_bucket('pvt-bucket').get_key('minion').get_contents_to_filename('/etc/salt/minion')" ]
+ - [ /sbin/service, salt-minion, restart ]
+ - [ /sbin/chkconfig, salt-minion, on ]

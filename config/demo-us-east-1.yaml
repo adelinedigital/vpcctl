@@ -1,0 +1,185 @@
+ami-options:
+  us-east-1:
+    ubuntu-20130313:
+      '12.10':
+        64-bit: {ebs: ami-ae9806c7, instance: ami-00e17f69}
+        32-bit: {ebs: ami-d09806b9, instance: ami-88e27ce1}
+    amazon:
+      '2013.03.1':
+        64-bit: {ebs: ami-3275ee5b, instance: ami-fc75ee95}
+        32-bit: {ebs: ami-5675ee3f, instance: ami-3875ee51}
+  us-west-2:
+    ubuntu-20130228:
+      '12.04':
+        64-bit: {ebs: ami-70970240, instance: ami-d6ea7fe6}
+        32-bit: {ebs: ami-869401b6, instance: ami-accb56c5}
+    ubuntu-20130303:
+      '12.10':
+        64-bit: {ebs: ami-b48f1a84, instance: ami-c68c19f6}
+        32-bit: {ebs: ami-6e8f1a5e, instance: ami-dcddff99}
+
+vpc-options:
+  region: us-east-1
+  cidr: 10.16.0.0/16
+  enable_dns_support: true
+  enable_dns_hostnames: true
+  ## override vpc-name with -n or --name CLI arguments
+  vpc-name: demo0
+  ## define access/secret keys here or fall back to boto configuration
+  ## https://code.google.com/p/boto/wiki/BotoConfig
+  #aws-access-key-id: AKI3LS8SAMPLE
+  #aws-secret-access-key: d3b07384dsample495y8ku4958yfhm495ydhxy65
+
+instance-defaults:
+  availability-zone: us-east-1c
+  ## override key-name with -k or --key CLI arguments
+  key-name: sshkeyname
+  os-release: amazon
+  os-version: 2013.03.1
+  instance-store: ebs
+  instance-arch: 64-bit
+  instance-type: m1.small
+  iam-role: S3InstanceReadAccess
+  count: 1
+
+dhcp_options:
+  domain_name: ec2.internal
+  domain_name_servers: AmazonProvidedDNS
+
+availability-zones:
+- name: us-east-1c
+  networks: { cache: 10.16.69.0/24, external: 10.16.64.0/24, infrastructure: 10.16.65.0/24, rds: 10.16.67.0/24, web: 10.16.66.0/24, mail: 10.16.68.0/24 }
+
+- name: us-east-1d
+  networks: { cache: 10.16.101.0/24, external: 10.16.96.0/24, infrastructure: 10.16.97.0/24, rds: 10.16.99.0/24, web: 10.16.98.0/24, mail: 10.16.100.0/24 }
+
+- name: us-east-1e
+  networks: { cache: 10.16.133.0/24, external: 10.16.128.0/24, infrastructure: 10.16.129.0/24, rds: 10.16.131.0/24, web: 10.16.130.0/24, mail: 10.16.132.0/24 }
+
+security-groups:
+- name: default
+  description: "default security group"
+  rules:
+  - { protocol: tcp,  from_port: 22, to_port: 22, source: self }
+  - { protocol: icmp, from_port: -1, to_port: -1, source: 0.0.0.0/0 }
+
+- name: web
+  description: "web services group"
+  rules:
+  - { protocol: tcp, from_port:  80, to_port:  80, source: 0.0.0.0/0 }
+  - { protocol: tcp, from_port: 443, to_port: 443, source: 0.0.0.0/0 }
+
+- name: ep
+  description: "ep services group"
+  rules:
+  - { protocol:  tcp, from_port:   22, to_port:   22, source: 0.0.0.0/0 }
+  - { protocol:  tcp, from_port: 1194, to_port: 1194, source: 0.0.0.0/0 }
+
+- name: auth
+  description: "auth services group"
+  rules:
+  - { protocol:  tcp, from_port:   389, to_port:  389, source: 0.0.0.0/0 }
+  - { protocol:  tcp, from_port:   636, to_port:  636, source: 0.0.0.0/0 }
+
+- name: imap
+  description: "imap services group"
+  rules:
+  - { protocol:  tcp, from_port:  143, to_port:  143, source: 0.0.0.0/0 }
+
+- name: smtp
+  description: "smtp services group"
+  rules:
+  - { protocol:  tcp, from_port:   25, to_port:   25, source: 0.0.0.0/0 }
+
+load-balancers:
+- name: ext-lb0
+  instances: [ rp-1c ]
+  security-groups: [ default, web ]
+  availability-zones: [ us-east-1c ]
+  subnets: [ external ]
+  aliases: [ ext-lb0 ]
+  scheme: internet-facing
+  listeners:
+  - [ 80, 80, HTTP ]
+
+- name: int-lb0
+  instances: [ web-1c ]
+  security-groups: [ default, web ]
+  availability-zones: [ us-east-1c ]
+  subnets: [ web ]
+  aliases: [ int-lb0 ]
+  scheme: internal
+  listeners:
+  - [ 80, 80, HTTP ]
+
+instances:
+- name: ep0
+  role: ep
+  # WARNING: don't expect consistent behavior when different AMIs encounter multiple NICs
+  nics:
+  #- { private-ip: 10.16.64.10, security-groups: [ default, ep, imap, smtp ] }
+  - { private-ip: 10.16.64.10, public-ip: 123.234.123.234, security-groups: [ default, ep, imap, smtp ] }
+  user-data-file: cloudinit/ep0.yaml
+  nat-gateway: true
+
+- name: ep1
+  instance-type: m1.small
+  private-ip: 10.16.96.10
+  #public-ip: a.b.c.d
+  availability-zone: us-east-1d
+  security-groups: [ default, ep, imap, smtp ]
+  user-data-file: cloudinit/ep1.yaml
+  nat-gateway: true
+
+- name: mail0
+  security-groups: [ smtp, mail, default ]
+  user-data-file: cloudinit/mail0.yaml
+  instance-type: m1.small
+  private-ip: 10.16.68.10
+  availability-zone: us-east-1c
+  ## reuse existing volumes
+  attach-volumes:
+    /dev/sdf: vol-d7c13b8f
+    /dev/sdg: vol-cdc13b95
+  ## new volumes
+  create-volumes:
+   "/dev/sdj": { size: 2, snapshot: null, type: standard, iops: null }
+   "/dev/sdk": { size: 2, snapshot: null, type: standard, iops: null }
+
+
+- name: mx0
+  private-ip: 10.16.64.11
+  #public-ip: a.b.c.d
+  availability-zone: us-east-1c
+  security-groups: [ smtp, default ]
+  instance-type: t1.micro
+  instance-store: ebs
+  user-data-file: cloudinit/mx0.yaml
+
+- name: auth0 
+  private-ip: 10.16.65.10
+  availability-zone: us-east-1c
+  security-groups: [ auth, default ]
+  instance-type: t1.micro
+  instance-store: ebs
+  user-data-file: cloudinit/auth0.yaml
+
+#DHCP nodes
+- name: web-1c
+  role: web
+  security-groups: [ web, default ]
+  user-data-file: cloudinit/web.yaml
+  instance-type: t1.micro
+  instance-store: ebs
+  availability-zone: us-east-1c
+  count: 2
+
+#DHCP nodes
+- name: rp-1c
+  role: web
+  security-groups: [ web, default ]
+  user-data-file: cloudinit/rp.yaml
+  instance-type: t1.micro
+  instance-store: ebs
+  availability-zone: us-east-1c
+  count: 2
