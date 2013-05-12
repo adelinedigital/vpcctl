@@ -354,8 +354,8 @@ def create_security_groups(vpc, sg_configs, tags=None):
             for rule in sgconfig['rules']:
                 source = rule['source']
                 protocol = rule['protocol']
-                from_port = int(rule['from_port'])
-                to_port = int(rule['to_port'])
+                from_port = int(rule['from-port'])
+                to_port = int(rule['to-port'])
                 if source == 'self':
                     sec_group.authorize(ip_protocol=protocol,
                                         from_port=from_port,
@@ -1173,18 +1173,22 @@ def init_vpc(config, tags):
     sys.stdout.write("VPC {} is {}\n".format(vpc.id, vpc.state))
     sys.stdout.flush()
 
-    if 'enable_dns_support' in config['vpc-options']:
-        enable_dns_support = config['vpc-options']['enable_dns_support']
+    if 'enable-dns-support' in config['vpc-options']:
+        enable_dns_support = config['vpc-options']['enable-dns-support']
         vpc.connection.modify_vpc_attribute(vpc_id=vpc.id,
                                       enable_dns_support=enable_dns_support)
 
-    if 'enable_dns_hostnames' in config['vpc-options']:
-        enable_dns_hostnames = config['vpc-options']['enable_dns_hostnames']
+    if 'enable-dns-hostnames' in config['vpc-options']:
+        enable_dns_hostnames = config['vpc-options']['enable-dns-hostnames']
         vpc.connection.modify_vpc_attribute(vpc_id=vpc.id,
                                       enable_dns_hostnames=enable_dns_hostnames)
 
-    if 'dhcp_options' in config:
-        opts = config['dhcp_options']
+    if 'dhcp-options' in config:
+        opts = dict()
+        if 'domain-name' in config['dhcp-options']:
+            opts['domain_name'] = config['dhcp-options']['domain-name']
+        if 'domain-name-servers' in config['dhcp-options']:
+            opts['domain_name_servers'] = config['dhcp-options']['domain-name-servers']
         dhcp_options = VPC_CONN.create_dhcp_options(**opts)
         tag_taggable(taggable=dhcp_options, tags=tags)
         VPC_CONN.associate_dhcp_options(dhcp_options.id, vpc.id)

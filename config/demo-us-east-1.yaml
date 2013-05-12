@@ -21,8 +21,8 @@ ami-options:
 vpc-options:
   region: us-east-1
   cidr: 10.16.0.0/16
-  enable_dns_support: true
-  enable_dns_hostnames: true
+  enable-dns-support: true
+  enable-dns-hostnames: true
   ## override vpc-name with -n or --name CLI arguments
   vpc-name: demo0
   ## define access/secret keys here or fall back to boto configuration
@@ -42,9 +42,9 @@ instance-defaults:
   iam-role: S3InstanceReadAccess
   count: 1
 
-dhcp_options:
-  domain_name: ec2.internal
-  domain_name_servers: AmazonProvidedDNS
+dhcp-options:
+  domain-name: ec2.internal
+  domain-name-servers: AmazonProvidedDNS
 
 availability-zones:
 - name: us-east-1c
@@ -60,36 +60,36 @@ security-groups:
 - name: default
   description: "default security group"
   rules:
-  - { protocol: tcp,  from_port: 22, to_port: 22, source: self }
-  - { protocol: icmp, from_port: -1, to_port: -1, source: 0.0.0.0/0 }
+  - { protocol: tcp,  from-port: 22, to-port: 22, source: self }
+  - { protocol: icmp, from-port: -1, to-port: -1, source: 0.0.0.0/0 }
 
 - name: web
   description: "web services group"
   rules:
-  - { protocol: tcp, from_port:  80, to_port:  80, source: 0.0.0.0/0 }
-  - { protocol: tcp, from_port: 443, to_port: 443, source: 0.0.0.0/0 }
+  - { protocol: tcp, from-port:  80, to-port:  80, source: 0.0.0.0/0 }
+  - { protocol: tcp, from-port: 443, to-port: 443, source: 0.0.0.0/0 }
 
 - name: ep
   description: "ep services group"
   rules:
-  - { protocol:  tcp, from_port:   22, to_port:   22, source: 0.0.0.0/0 }
-  - { protocol:  tcp, from_port: 1194, to_port: 1194, source: 0.0.0.0/0 }
+  - { protocol:  tcp, from-port:   22, to-port:   22, source: 0.0.0.0/0 }
+  - { protocol:  tcp, from-port: 1194, to-port: 1194, source: 0.0.0.0/0 }
 
 - name: auth
   description: "auth services group"
   rules:
-  - { protocol:  tcp, from_port:   389, to_port:  389, source: 0.0.0.0/0 }
-  - { protocol:  tcp, from_port:   636, to_port:  636, source: 0.0.0.0/0 }
+  - { protocol:  tcp, from-port:   389, to-port:  389, source: 0.0.0.0/0 }
+  - { protocol:  tcp, from-port:   636, to-port:  636, source: 0.0.0.0/0 }
 
 - name: imap
   description: "imap services group"
   rules:
-  - { protocol:  tcp, from_port:  143, to_port:  143, source: 0.0.0.0/0 }
+  - { protocol:  tcp, from-port:  143, to-port:  143, source: 0.0.0.0/0 }
 
 - name: smtp
   description: "smtp services group"
   rules:
-  - { protocol:  tcp, from_port:   25, to_port:   25, source: 0.0.0.0/0 }
+  - { protocol:  tcp, from-port:   25, to-port:   25, source: 0.0.0.0/0 }
 
 load-balancers:
 - name: ext-lb0
@@ -125,7 +125,7 @@ instances:
 - name: ep1
   instance-type: m1.small
   private-ip: 10.16.96.10
-  #public-ip: a.b.c.d
+  public-ip: 234.123.234.123
   availability-zone: us-east-1d
   security-groups: [ default, ep, imap, smtp ]
   user-data-file: cloudinit/ep1.yaml
