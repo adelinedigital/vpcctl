@@ -114,7 +114,7 @@ load-balancers:
 
 instances:
 - name: ep0
-  role: ep
+  subnet: ep
   # WARNING: don't expect consistent behavior when different AMIs encounter multiple NICs
   nics:
   #- { private-ip: 10.16.64.10, security-groups: [ default, ep, imap, smtp ] }
@@ -166,7 +166,7 @@ instances:
 
 #DHCP nodes
 - name: web-1c
-  role: web
+  subnet: web
   security-groups: [ web, default ]
   user-data-file: cloudinit/web.yaml
   instance-type: t1.micro
@@ -176,7 +176,7 @@ instances:
 
 #DHCP nodes
 - name: rp-1c
-  role: web
+  subnet: web
   security-groups: [ web, default ]
   user-data-file: cloudinit/rp.yaml
   instance-type: t1.micro

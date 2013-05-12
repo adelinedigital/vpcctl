@@ -33,6 +33,7 @@ $ vpcctl.py -f config/minimal-us-east-1.yaml initvpc -n demo0 -k mykeypairname -
 
 ## Usage ##
 
+Create VPC:
 <pre>
 vpcctl.py -f config.yaml initvpc [-n NAME] [-d DELAY] [-k KEY] [-t TAG]
 
@@ -45,6 +46,7 @@ optional arguments:
   -t TAG, --tag TAG     arbitrary tag: use key:value format
 </pre>
 
+Ad-hoc instance launch:
 <pre>
 vpcctl.py -f config.yaml runinstance [-h] [-k KEY] [-t TAG] [-c COUNT] vpcid name
 
@@ -63,11 +65,12 @@ optional arguments:
 ## Configuration Reference ##
 
 ### ami-options ###
+* _scope: global_
 
 Nested associative arrays:
 
 ```python
-ami-options = {'region': {'os-release': {'os-version': {'instance-arch': {'instance-store': 'ami-id'} } } } }
+ami-options = {region: {os-release: {os-version: {instance-arch: {instance-store: 'ami-id'}}}}}
 ```
 
 Example:
@@ -94,35 +97,8 @@ ami-options:
 ```
 
 ### vpc-options ###
-
-#### region ####
-
-Geographical region to deploy/manage the VPC.
-
-#### cidr ####
-
-VPC's cider block
-
-#### DNS Configuration ####
-<pre>
-  enable_dns_support: true
-  enable_dns_hostnames: true
-</pre>
-
-VPC's DNS services.
-
-#### vpc-name ####
-
-Name of the VPC.  Is tagged to all taggable objects as 'vpc-name'.
-
-#### Access Configuration ####
-<pre>
-  aws-access-key-id: AKI3LS8SAMPLE
-  aws-secret-access-key: d3b07384dsample495y8ku4958yfhm495ydhxy65
-</pre>
-
-Authentication credentials.  If not specified in the configuration
-file, vpcctl will fall back to standard Boto configuration files.
+* _scope: global_
+* _type: dictionary_
 
 Example
 ```yaml
@@ -134,38 +110,49 @@ vpc-options:
   vpc-name: example-vpc
 ```
 
-### instance-defaults ####
-#### availability-zone ####
+#### region:
+* _scope: vpc-options_
+* _type: string_
 
-The default availability zone.  May be overridden via individual object
-configuration.
+Geographical region to deploy/manage the VPC, e.g.:
+* us-east-1
+* us-west-2
 
-#### key-name ####
+#### cidr:
+* _scope: vpc-options_
+* _type: string_
 
-SSH key pair.  Override key-name with -k or --key CLI arguments.
+VPC's CIDR block.
 
-#### AMI Selection ####
-<pre>
-  os-version
-  os-release
-  instance-arch
-  instance-store
-</pre>
+<pre>10.0.0.0/16</pre>
 
-AMI selection directives.  See ami-options above.
+#### enable-dns-support:
+#### enable-dns-hostnames:
+* _scope: vpc-options_
+* _type: boolean_
 
-#### instance-type ####
+VPC's DNS services.  AWS will deploy DNS services in the VPC if
+enable-dns-support is set to 'true'.  if enable-dns-hostnames and
+enable-dns-support are both set to 'true', AWS will deploy DNS services with
+resolution for hostnames and IP addresses within the VPC.
 
-Default instance type.  May be overridden via individual instance configuration.
+#### vpc-name:
+* _scope: vpc-options_
+* _type: string_
 
-#### iam-role ####
+Name of the VPC.  Is tagged to all taggable objects as 'vpc-name'.
 
-Default IAM role for instances.
+#### aws-access-key-id:
+#### aws-secret-access-key:
+* _scope: vpc-options_
+* _type: string_
 
-####  count ####
+Authentication credentials.  If not specified in the configuration
+file, vpcctl will fall back to standard Boto configuration files.
 
-Default number of instances to launch for each instance configuration.  Implies
-DHCP.
+### instance-defaults
+* _scope: global_
+* _type: dictionary_
 
 Example:
 ```yaml
@@ -181,30 +168,77 @@ instance-defaults:
   count: 1
 ```
 
-### DHCP Options ###
+#### availability-zone:
+* _scope: instance-defaults_
+* _type: string_
 
-#### domain_name ####
+The default availability zone, e.g. us-east-1c.
 
-DHCP domain_name
+#### key-name:
 
-#### domain_name_servers ####
+SSH key pair.  Override key-name with -k or --key CLI arguments.
+
+#### os-version:
+#### os-release:
+#### instance-arch:
+#### instance-store:
+* _scope: instance-defaults_
+* _type: string_
+
+AMI selection directives.  See ami-options above.
+
+#### instance-type:
+* _scope: instance-defaults_
+* _type: string_
+
+Default instance type, e.g. m1.small.
+
+#### iam-role:
+* _scope: instance-defaults_
+* _type: string_
+
+Default IAM role for instances.
+
+#### count:
+* _scope: instance-defaults_
+* _type: int_
+
+Default number of instances to launch for each instance configuration.  Values
+greater than one preclude many things such as specifying IP addresses or EBS
+attachements.  Default will usually be 1.
+
+### dhcp-options: ###
+* _scope: global_
+* _type: dictionary_
+
+#### domain-name:
+* _scope: dhcp-options_ 
+* _type: string_
+
+DHCP domain-name:
+
+#### domain-name-servers
+* _scope: dhcp-options_ 
+* _type: string_
 
 Use 'AmazonProvidedDNS' to have Amazon deploy DNS service to VPC.
 
 Example:
-
 ```yaml
-dhcp_options:
-  domain_name: ec2.internal
-  domain_name_servers: AmazonProvidedDNS
+dhcp-options:
+  domain-name: ec2.internal
+  domain-name-servers: AmazonProvidedDNS
 ```
 
-### availability-zones ###
+### availability-zones:
+* _scope: global_
+* _type: list of dictionaries_
 
 List of associative arrays configuring subnets in availability zones.  Networks
 named 'external' will automatically be configured to route to an Internet
 Gateway device.  All other names result in internal subnets.  Internal subnets
-will be configured to route to a local NAT service instance, if available.
+will be configured to route to a local NAT service instance, if available.  See
+nat-gateway instance flag below.
 
 The following example deploys 18 subnets in 3 availability zones:
 
@@ -225,16 +259,50 @@ The following example deploys 18 subnets in 3 availability zones:
               web: 10.16.130.0/24, mail: 10.16.132.0/24 }
 ```
 
-### security-groups ###
+### security-groups:
+* _scope: global_
+* _type: list of dictionaries_
 
-List of associative arrays confiuring security groups.
+List of associative arrays configuring security groups.
 
+#### name:
+* _scope: security-group_
+* _type: string_
+
+#### description:
+* _scope: security-group_
+* _type: string_
+
+#### rules:
+* _scope: security-group_
+* _type: list of dictionaries_
+
+##### protocol:
+* _scope: rule_
+* _type: string_
+'tcp', 'udp' or 'icmp'
+
+##### from-port and to-port:
+* _scope: rule_
+* _type: int_
+
+##### source:
+* _scope: rule_
+* _type string_
+'self', CIDR block or name of security group.
+
+Example:
 ```yaml
 - name: default
   description: "default security group"
   rules:
   - { protocol: tcp,  from_port: 22, to_port: 22, source: self }
   - { protocol: icmp, from_port: -1, to_port: -1, source: 0.0.0.0/0 }
+
+- name: ldap
+  description: "ldap services group"
+  rules:
+  - { protocol: tcp, from_port:  389, to_port:  389, source: default }
 
 - name: web
   description: "web services group"
@@ -243,20 +311,48 @@ List of associative arrays confiuring security groups.
   - { protocol: tcp, from_port: 443, to_port: 443, source: 0.0.0.0/0 }
 ```
 
-### load-balancers ###
+### load-balancers:
+* _scope: global_
+* _type: list of dictionaries_
 
 List of associative arrays specifying load balancers.
 
-Keys instances, security-groups, availability-zones and subnets reference
-configuration object object names.
-
-#### scheme ####
+#### scheme:
+* _scope: load-balancers_
+* _type: string_
 
 May be 'internal' or 'internet-facing'.
 
-#### listeners ####
+#### listeners:
+* _scope: load-balancers_
+* _type: list_
 
-A list of [ source, dest, proto ] configurations.
+A list of [ source, dest, proto ] configurations.  In Python, this might look
+like a tuple: (int, int, string).
+
+#### instances:
+* _scope: load-balancers_
+* _type: list of strings_
+
+List of strings that reference configuration object names.
+
+#### security-groups:
+* _scope: load-balancers_
+* _type: list of strings_
+
+List of strings that reference configuration object names.
+
+#### availability-zones:
+* _scope: load-balancers_
+* _type: list of strings_
+
+List of strings that reference configuration object names.
+
+#### subnets:
+* _scope: load-balancers_
+* _type: list of strings_
+
+List of strings that reference configuration object names.
 
 Example:
 ```yaml
@@ -281,28 +377,55 @@ load-balancers:
   - [ 80, 80, HTTP ]
 ```
 
-### instances ###
+### instances:
+* _scope: global_
+* _type: list of dictionaries_
 
 List of associative arrays specifying instance configurations.
 
-#### role ####
+#### name:
+* _scope: instance configuration_
+* _type: string_
 
-Specifies the subnet name.  This is overridden by more specific configuration
-directives like 'nics' or 'private-ip'.
+Name of the instance or instances.  Gets tagged as value for 'Name' key.
 
-#### user-data-file ####
+#### instance-type:
+* _scope: instance configuration_
+* _type: string_
+
+E.g.: m1.small or t1.micro.  Falls back to instance-defaults: instance-type if
+not specified.
+
+#### availability-zone:
+* _scope: instance configuration_
+* _type: string_
+
+Falls back to instance-defaults: availability-zone if not specified.
+
+#### subnet:
+* _scope: instance configuration_
+* _type: string_
+
+References the instance's subnet by configuration name.  This is overridden by
+more specific configuration directives like 'nics' or 'private-ip'.
+
+#### user-data-file:
+* _scope: instance configuration_
+* _type: string_
 
 Path to a local file to feed the instances' user-data field.
 
-#### nat-gateway ####
+#### nat-gateway:
+* _scope: instance configuration_
+* _type: boolean_
 
-Configures networking requirements to service as a NAT gateway.
-
-#### Network Configuration ####
+Configures networking requirements for an instance to serve as a NAT gateway.
 
 Order of configuration priority from high to low: nics, private-ip, DHCP.
 
-##### nics #####
+#### nics:
+* _scope: instance configuration_
+* _type: dictionary_
 
 Used to specify multiple network interfaces.  Each entry may specify the
 following configuration directives:
@@ -311,40 +434,33 @@ following configuration directives:
 * private-ip: internal IP address
 * security-groups: list of names of security group configurations
 
-##### private-ip #####
-
-Specifies a single network interface.
-
-##### DHCP ######
-
-If private-ip or nics is not specified, the instance will acquire an IP address
-via DHCP.
-
-##### public-ip #####
+#### public-ip:
+* _scope: instance configuration_
+* _type: string_
 
 An available elastic IP to associate with the instance.
 
-Examples:
+#### private-ip:
+* _scope: instance configuration_
+* _type: string_
 
+Specifies a single IP address.
+
+#### Example Network Configurations
 Instance with multiple network interfaces:
 ```yaml
 - name: ep0
   nics:
   - { private-ip: 10.16.64.10, public-ip: 123.234.123.234, security-groups: [ default, ep, imap, smtp ] }
   - { private-ip: 10.16.64.11, public-ip: 234.123.234.123, security-groups: [ default, ep, imap, smtp ] }
-  user-data-file: cloudinit/ep0.yaml
   nat-gateway: true
 ```
 
 DHCP instances:
 ```yaml
 - name: web-1c
-  role: web
+  subnet: web
   security-groups: [ web, default ]
-  user-data-file: cloudinit/web.yaml
-  instance-type: t1.micro
-  instance-store: ebs
-  availability-zone: us-east-1c
   count: 2
 ```
 
@@ -360,8 +476,8 @@ ami-options:
 vpc-options:
   region: us-east-1
   cidr: 10.16.0.0/16
-  enable_dns_support: true
-  enable_dns_hostnames: true
+  enable-dns-support: true
+  enable-dns-hostnames: true
   ## override vpc-name with -n or --name CLI arguments
   vpc-name: minimal0
   ## define access/secret keys here or fall back to boto configuration
@@ -381,9 +497,9 @@ instance-defaults:
   iam-role: S3InstanceReadAccess
   count: 1
 
-dhcp_options:
-  domain_name: ec2.internal
-  domain_name_servers: AmazonProvidedDNS
+dhcp-options:
+  domain-name: ec2.internal
+  domain-name-servers: AmazonProvidedDNS
 
 availability-zones:
 - name: us-east-1c
@@ -393,20 +509,20 @@ security-groups:
 - name: default
   description: "default security group"
   rules:
-  - { protocol: tcp,  from_port: 22, to_port: 22, source: self }
-  - { protocol: icmp, from_port: -1, to_port: -1, source: 0.0.0.0/0 }
+  - { protocol: tcp,  from-port: 22, to-port: 22, source: self }
+  - { protocol: icmp, from-port: -1, to-port: -1, source: 0.0.0.0/0 }
 
 - name: web
   description: "web services group"
   rules:
-  - { protocol: tcp, from_port:  80, to_port:  80, source: 0.0.0.0/0 }
-  - { protocol: tcp, from_port: 443, to_port: 443, source: 0.0.0.0/0 }
+  - { protocol: tcp, from-port:  80, to-port:  80, source: 0.0.0.0/0 }
+  - { protocol: tcp, from-port: 443, to-port: 443, source: 0.0.0.0/0 }
 
 - name: ep
   description: "ep services group"
   rules:
-  - { protocol:  tcp, from_port:   22, to_port:   22, source: 0.0.0.0/0 }
-  - { protocol:  tcp, from_port: 1194, to_port: 1194, source: 0.0.0.0/0 }
+  - { protocol:  tcp, from-port:   22, to-port:   22, source: 0.0.0.0/0 }
+  - { protocol:  tcp, from-port: 1194, to-port: 1194, source: 0.0.0.0/0 }
 
 load-balancers:
 - name: ext-lb0

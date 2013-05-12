@@ -76,7 +76,7 @@ instances:
   nat-gateway: true
 
 - name: web-1c
-  role: internal
+  subnet: internal
   security-groups: [ web, default ]
   user-data-file: cloudinit/web.yaml
   instance-type: t1.micro

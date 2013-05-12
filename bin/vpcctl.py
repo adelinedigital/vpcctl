@@ -640,10 +640,10 @@ def create_nicspecs(vpc, instance_config, tags=None):
 
         nicspecs.append(nicspec)
 
-    elif 'role' in instance_config:
+    elif 'subnet' in instance_config:
         security_groups = [sg for sg in security_group_list \
                                if sg.name in instance_config['security-groups']]
-        network = find_subnet_by_role(vpc, instance_config['role'],
+        network = find_subnet_by_role(vpc, instance_config['subnet'],
                                       instance_config['availability-zone'])
 
         nicspec = create_nic_spec(vpc=vpc,
@@ -879,7 +879,7 @@ def create_instances(vpc, instance_configs, config_defaults,
                                                tags=tags)
         else:
             subnet = find_subnet_by_role(vpc=vpc,
-                                         role=instance_config['role'],
+                                         role=instance_config['subnet'],
                                          av_zone=options['placement'])
             if subnet:
                 options['subnet_id'] = subnet.id
