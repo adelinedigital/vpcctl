@@ -429,8 +429,8 @@ Order of configuration priority from high to low: nics, private-ip, DHCP.
 
 Attach an existing EBS volume.
 
-Key: device
-Value: volume ID
+- Key: device
+- Value: volume ID
 
 Example:
 ```yaml
@@ -445,19 +445,19 @@ attach-volumes:
 
 Create one or more new EBS block volumes.
 
-Key: device
-Value: associative array of new device configuration:
-* size: int (GB)
-* snapshot: string (id or null)
-* type: string (standard or io1)
-* iops: int (iops or null)
+- Key: device
+- Value: associative array of new device configuration:
+    * size: int (GB)
+    * snapshot: string (id or null)
+    * type: string (standard or io1)
+    * iops: int (iops or null)
 
 Example:
 ```yaml
 create-volumes:
    "/dev/sdj": { size: 2, snapshot: null, type: standard, iops: null }
    "/dev/sdk": { size: 2, snapshot: null, type: standard, iops: null }
-'''
+```
 
 #### nics:
 * _scope: instance configuration_
