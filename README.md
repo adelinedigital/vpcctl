@@ -423,6 +423,42 @@ Configures networking requirements for an instance to serve as a NAT gateway.
 
 Order of configuration priority from high to low: nics, private-ip, DHCP.
 
+#### attach-volumes:
+* _scope: instance configuration_
+* _type: dictionary_
+
+Attach an existing EBS volume.
+
+Key: device
+Value: volume ID
+
+Example:
+```yaml
+attach-volumes:
+    /dev/sdf: vol-d7c13b8f
+    /dev/sdg: vol-cdc13b95
+```
+
+#### create-volumes:
+* _scope: instance configuration_
+* _type: dictionary_
+
+Create one or more new EBS block volumes.
+
+Key: device
+Value: associative array of new device configuration:
+* size: int (GB)
+* snapshot: string (id or null)
+* type: string (standard or io1)
+* iops: int (iops or null)
+
+Example:
+```yaml
+create-volumes:
+   "/dev/sdj": { size: 2, snapshot: null, type: standard, iops: null }
+   "/dev/sdk": { size: 2, snapshot: null, type: standard, iops: null }
+'''
+
 #### nics:
 * _scope: instance configuration_
 * _type: dictionary_
