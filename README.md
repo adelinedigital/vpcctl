@@ -289,7 +289,7 @@ List of associative arrays configuring security groups.
 ##### source:
 * _scope: rule_
 * _type string_
-'self', CIDR block or name of security group.
+'self', 'default' or valid CIDR block.
 
 Example:
 ```yaml

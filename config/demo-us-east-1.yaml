@@ -78,8 +78,8 @@ security-groups:
 - name: auth
   description: "auth services group"
   rules:
-  - { protocol:  tcp, from-port:   389, to-port:  389, source: 0.0.0.0/0 }
-  - { protocol:  tcp, from-port:   636, to-port:  636, source: 0.0.0.0/0 }
+  - { protocol:  tcp, from-port:   389, to-port:  389, source: default }
+  - { protocol:  tcp, from-port:   636, to-port:  636, source: default }
 
 - name: imap
   description: "imap services group"
